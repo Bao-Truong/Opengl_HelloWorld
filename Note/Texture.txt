@@ -1,0 +1,5 @@
+1. Load Picture(.PNG) into the CPU -> Give FilePAth return pointer to a buffer of rgba picture
+2. Create a texture in opengl
+3. Bind texture
+4. modified shader
+5. sample in shader

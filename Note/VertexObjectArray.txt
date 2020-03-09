@@ -1,0 +1,21 @@
+Vertex object array
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);;
+
+Thông thường mọi Attrib của 1 vertex phải được nạp lại để có thể chỉnh sửa layout của 1 vertex nào đó,
+sau các mỗi vẽ.
+Nhưng nhờ vertex array object(vao), ta lưu toàn bộ vertex buffer, attrib vertex vào trong bind 'vao'
+nhờ nó thì sau mỗi lệnh while() ta không cần khai báo lại vertex attrib layout
+
+thông thường trong GLFW_OPENGL_COMPAT_PROFILE(compatities): thì nó đã ngầm tạo cho ta 1 vertex array object
+trong GLFW_OPENGL_COMPAT_PROFILE thì không có mà ta phải tự khai báo 'vao' riêng
+
+unsigned int vao; //vertex array object id
+GLCall(glGenVertexArrays(1, &vao));
+GLCall(glBindVertexArray(vao));
+
+thực hiện các lệnh trên xong sau đó mới bắt đầu tạo vertex buffer->bind buffer -> layout -> attrib -> enable.
+
+trong vòng while() thì ta chỉ cần bind vao và bind indices(index)

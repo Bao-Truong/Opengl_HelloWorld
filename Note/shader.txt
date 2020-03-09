@@ -1,0 +1,40 @@
+need to known shader: vertex shader + fragment shader
+
+vertex shader:
+quyết định xem vertex đó sẽ được đặt tại vị trí nào trên window
+thường số lần gọi bằng với số lượng vertex
+
+fragment shader:
+xảy ra sau khi vertex shader chạy
+quyết định từng màu sắc của 1 pixel trong vùng vertex shader xử lý trước đó(vd: hình tam giác)
+fragment shader có thể chạy vài chục ngàn lần để bao phủ 1 vùng pixel gán từng màu.
+
+vì Shader là 1 program:(cần cả 2 shader) và giống như Vertex nó cần được tạo ra và cần được blind để xử dụng
+Tạo 1 Program để chứa nó:
+	===>>>		unsigned int program = glCreateProgram();
+nên cần phải tạo ra 1 đối tượng (file) cho nó.
+	===>>>		unsigned int id = glCreateShader(type);
+sau đó cấp source code 
+	===>>>		const char* src = source.c_str();
+				glShaderSource(id, 1, &src, nullptr);
+rồi compile 
+	=====>>>	glCompileShader(id);
+tới bước này ta đã có 1 cái như binary class
+cần làm cho chương trình chạy file binary của mình 
+	===>>>>>	glAttachShader(program, vs);
+				glAttachShader(program, fs);
+
+sau đó gắn chương trình mình tạo này vào với chương trình thật sự:
+	===>>>>		glLinkProgram(program);
+				glValidateProgram(program);
+
+vì shader đã được liên kết vs program nên ta có thể xoá nó đi(sau khi validate)
+	===>>>>		glDeleteShader(vs);
+				glDeleteShader(fs);
+Sau đó thì return cái program ta vừa tạo
+	===>>>		unsigned int shader = CreateShader(vertexShader,fragmentShader);
+tiếp theo là blind để dùng được program có chứa 2 shader mà ta tạo
+	===>>>>		glUseProgram(shader);
+
+Kết thúc chương trình bằng cách delete program lúc hết xài
+	===>>>>		glDeleteProgram(shader);

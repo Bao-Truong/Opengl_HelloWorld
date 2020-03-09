@@ -1,0 +1,52 @@
+Vertex:(đỉnh) không phải chỉ nói tới position của mà
+mà còn có thể chỉ các thứ khác như: toạ độ, màu sắc,
+môi trường của vertex đó, các thứ đó (toạ độ, màu sắc) được gọi là
+thuộc tính của Vertex đó (Attribute)
+
+để có thể gán attribute cho vertex thì dùng glVertexAttribPointer()
+
+float positions[6] = { //gồm 3 vertex 
+		-0.5f,-0.5f,
+		0.0f, 0.5f,
+		0.5f, -0.5f
+	};
+
+glEnableVertexAttribArray(0); để kích hoạt attribute <<--- BẮT BUỘC sau khi khai báo attribute
+glVertexAttribPointer(index, size, type, normalize, stride, pointer)
+:Dùng để định nghĩa cho 1 attribute của 1 vertex đã được bind (glBindBuffer())
+vertex có nhiều attribute thì phải có nhiều lệnh glVertexAttribPointer()
+
+INDEX:
+mỗi một attribute trong 1 vertex được đánh dấu bởi 1 index
+vd: vertex có thể có attribute: Position - Texture coopernate - normal
+thì position sẽ có index =0 
+texture coopernate index=1
+normal index=2
+
+dùng shader để gọi index tương ứng trong vertex
+
+SIZE:
+chỉ có thể có các số 1,2,3,4, mặc định là 4
+bao nhiều cái số mà dựa vào kiểu TYPE ở dưới mà mình đưa vào.
+vd ở positions thì SIZE =2 với TYPE= GL_FLOAT là 2 số kiểu float để lấy 2 toạ độ position
+giả dụ toạ độ 3 chiều thì ta sẽ cho size=3 để lấy 3 số float
+
+TYPE:
+type của dữ liệu mà nó định nghĩa attrbute hiện đang khai báo
+các kiểu GL_FLOAT,... đọc thêm docs.gl
+
+NORMALIZE:(Float ko quan tâm)
+khi nói tới màu sắc có giá trị 0-255 thì cần normalize để chuyển thành 0-1
+GL_FALSE để tắt
+
+STRIDE:
+Tính bằng BYTEs
+khoảng cách số bytes giữa 2 vertex khác nhau(chú ý vertex ko phải attribute) =size(vertex trước)
+trường hợp vd position thì là size(float)*2 do 1 vertex chứa 2 số float position thôi
+để đến vertex tiếp theo thì cách nhau = size(vertex) trước, khoảng cách này phải cố định
+
+POINTER:
+khoảng cách để đến được attribute đang khai báo từ đầu vertex
+vd position thì là (const void*)0 do vertex chỉ có 1 attribute và năm ngay ở đầu
+vd nếu vertex có 3 attribute thì phải tính offset, khoảng cách offset là tới được attribute đó
+trong cùng 1 vertex	tính bằng BYTEs sizeof(float)*...

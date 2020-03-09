@@ -1,0 +1,15 @@
+Projection matrix:
+ Dùng để chỉnh ép các toạ độ từ code sang toạ độ trên screen là [-1,1]
+ Dùng Orthographic hay prespective graphic
+ Orthor có tác dụng khai báo lại kích thước các toạ độ X,Y,Z; 
+ từ đó mà các Vertex có thể nằm trong phạm vi cái X,Y,Z đó
+ sau đó thì Projection Matrix có tác dụng là từ các toạ độ X,Y,Z
+ scale lại thành toạ độ mặc định là [-1,1], như tính ratio giữa toạ độ vertex/Ortho
+
+View Matrix:
+ Dùng như một Camera 
+
+Model matrix:
+ Tác động tới Object mà ta vẽ
+
+Projection x Model x View = Tranformation(Translation, Rotation, Scale)
